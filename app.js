@@ -6,6 +6,7 @@ var logger = require('morgan');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
+const cors = require('cors');
 // import mongoose
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://dikyriz:bwa-mern@cluster0.g20wugd.mongodb.net/db_staycation?retryWrites=true&w=majority', {
@@ -43,6 +44,11 @@ app.use('/sb-admin-2', express.static(path.join(__dirname, 'node_modules/startbo
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use(cors({
+    origin: '*'
+}))
+
 // admin
 app.use('/admin', adminRouter);
 app.use('/api/v1/member', apiRouter);
@@ -62,5 +68,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+
 
 module.exports = app;
